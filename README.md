@@ -3,22 +3,34 @@ Intern Technical Assessment
 
 ## How to Run
 
-1. **Install dependencies**  
+1. **Create and activate a virtual environment**  
+   On Windows:
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+   On macOS/Linux:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+2. **Install dependencies**  
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Set environment variables**  
+3. **Set environment variables**  
    - Copy `.env.example` to `.env` and fill in your API keys:
      - `OPENAI_API_KEY`
      - `WEATHER_API_KEY`
 
-3. **Start the server**  
+4. **Start the server**  
    ```bash
    uvicorn app.main:app --reload
    ```
 
-4. **Access the API**  
+5. **Access the API**  
    - Open [http://localhost:8000/docs](http://localhost:8000/docs) in your browser for the interactive API docs.
 
 ## System Prompt & Agent Behavior

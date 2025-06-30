@@ -7,7 +7,6 @@ logger = logging.getLogger(__name__)
 
 class OpenAITool:
     def __init__(self):
-        logger.info(f"Initializing OpenAI with key: {settings.openai_api_key[:5]}...")
         self.client = AsyncOpenAI(api_key=settings.openai_api_key)
 
     async def generate_content(self, prompt: str, system_prompt: str = "") -> ToolResponse:
