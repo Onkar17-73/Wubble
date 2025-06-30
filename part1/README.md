@@ -33,23 +33,23 @@ Intern Technical Assessment
 5. **Access the API**  
    - Open [http://localhost:8000/docs](http://localhost:8000/docs) in your browser for the interactive API docs.
 
-## Example
+## System Prompt & Agent Behavior
 
-```bash
-python -m venv venv
-venv\Scripts\activate         # (Windows) or source venv/bin/activate (macOS/Linux)
-pip install -r requirements.txt
-copy .env.example .env        # or cp .env.example .env (macOS/Linux)
-# Edit .env and add your API keys
-uvicorn app.main:app --reload
-# Visit http://localhost:8000/docs in your browser
-```
+- The agent is guided by a system prompt enforcing a helpful, safe, and concise tone.
+- Fallback logic ensures a safe response if tools fail or the prompt is off-topic.
+- The agent uses at least two tools:
+  - **OpenAI** (for general queries)
+  - **Weather API** (for weather-related queries)
+  - Additional custom logic for general/fallback responses.
 
-## Notes
+## Automated Evaluation Framework
 
-- Ensure your `.env` file contains valid API keys.
-- For testing, run `pytest`.
-- For Docker deployment, see the `part2` folder.
+- The project includes an automated evaluation framework to validate:
+  - Input validation and error handling
+  - Correct routing to tools based on prompt type
+  - Adherence to system prompt (tone, safety, fallback)
+  - Pass/fail results for 5–8 test cases (typical, edge, off-topic)
+
 ## Running Tests
 
 1. **Run all tests (including evaluation):**
