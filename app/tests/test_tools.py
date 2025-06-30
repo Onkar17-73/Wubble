@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch
 from app.tools.weather_tool import WeatherTool
-from app.tools.gemini_tool import OpenAITool
+from Wubble.app.tools.openai_tool import OpenAITool
 from app.models.schemas import ToolResponse
 
 @pytest.mark.asyncio

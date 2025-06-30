@@ -5,7 +5,8 @@ from app.agents.router import route_prompt
 from app.utils.logging import get_logger
 from app.models.settings import settings
 from fastapi.responses import JSONResponse  # Add this import
-
+from app.models.settings import settings
+print(f"Keys on startup - OpenAI: {bool(settings.openai_api_key)}, Weather: {bool(settings.weather_api_key)}")
 logger = get_logger(__name__)
 
 app = FastAPI(

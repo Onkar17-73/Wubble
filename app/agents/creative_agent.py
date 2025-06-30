@@ -1,7 +1,7 @@
-from typing import Optional, Dict, Any
+from typing import Dict, Any
 from app.agents.base_agent import BaseAgent
-from app.models.schemas import UserPrompt, AgentResponse, ToolType
-from app.tools.gemini_tool import OpenAITool
+from app.models.schemas import UserPrompt, AgentResponse, ToolType  # Added UserPrompt import
+from app.tools.openai_tool import OpenAITool
 from app.tools.weather_tool import WeatherTool
 from app.models.settings import settings
 import logging
@@ -11,13 +11,13 @@ logger = logging.getLogger(__name__)
 class CreativeAgent(BaseAgent):
     def __init__(self):
         super().__init__()
-        self.gemini_tool = OpenAITool()
+        self.openai_tool = OpenAITool()
         self.weather_tool = WeatherTool()
         self.system_prompt = settings.system_prompt
+        self.fallback_response = settings.fallback_prompt
 
     async def process_prompt(self, prompt: UserPrompt) -> AgentResponse:
         try:
-            # Check if prompt is about weather
             if self._is_weather_query(prompt.prompt_text):
                 weather_data = await self.weather_tool.get_weather(prompt.prompt_text)
                 if weather_data.success:
@@ -28,20 +28,18 @@ class CreativeAgent(BaseAgent):
                         metadata=weather_data.content
                     )
             
-            # Default to Gemini for creative tasks
-            gemini_response = await self.gemini_tool.generate_content(
+            openai_response = await self.openai_tool.generate_content(
                 prompt.prompt_text,
                 system_prompt=self.system_prompt
             )
             
-            if gemini_response.success:
+            if openai_response.success:
                 return self.create_response(
-                    response_text=gemini_response.content["text"],
-                    tool_type=ToolType.GEMINI,
-                    metadata=gemini_response.content
+                    response_text=openai_response.content["text"],
+                    tool_type=ToolType.OPENAI,
+                    metadata=openai_response.content
                 )
             
-            # Fallback if all tools fail
             return self.create_response(
                 response_text=self.fallback_response,
                 tool_type=ToolType.GENERAL,

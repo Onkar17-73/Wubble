@@ -1,11 +1,18 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
 
 class Settings(BaseSettings):
-    app_name: str = "Intelligent Agent API"
-    allowed_origins: List[str] = ["*"]
-    weather_api_key: str = ""
-    openai_api_key: str = ""  # For OpenAI and evaluation judge
+    pp_name: str = "Intelligent Agent API"
+    allowed_origins: list = ["*"]
+    
+    # These will now be properly loaded from .env
+    openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
+    weather_api_key: str = os.getenv("WEATHER_API_KEY", "") # For OpenAI and evaluation judge
     system_prompt: str = """
     You are a helpful, creative, and precise AI assistant. Follow these guidelines:
     1. Be friendly but professional in tone
@@ -16,8 +23,9 @@ class Settings(BaseSettings):
     6. If unsure, say you don't know rather than guessing
     """
     fallback_prompt: str = "I'm sorry, I couldn't process your request. Could you please rephrase or provide more details?"
-
-    class Config:
-        env_file = ".env"
-
+   
+   
 settings = Settings()
+
+print(f"[DEBUG] OpenAI key loaded: {bool(settings.openai_api_key)}")
+print(f"[DEBUG] Weather key loaded: {bool(settings.weather_api_key)}")

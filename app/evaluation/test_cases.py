@@ -1,4 +1,3 @@
-from typing import List, Dict, Any
 from app.models.schemas import ToolType
 
 TEST_CASES = [
@@ -11,13 +10,13 @@ TEST_CASES = [
     {
         "name": "creative_writing_request",
         "prompt": "Write a short poem about artificial intelligence",
-        "expected_tool": ToolType.GEMINI,
+        "expected_tool": ToolType.OPENAI,  # Changed from GEMINI
         "expected_characteristics": ["creative", "poetic structure", "on topic"]
     },
     {
         "name": "ambiguous_query",
         "prompt": "Tell me something interesting",
-        "expected_tool": ToolType.GEMINI,
+        "expected_tool": ToolType.OPENAI,  # Changed from GEMINI
         "expected_characteristics": ["informative", "engaging"]
     },
     {
@@ -33,13 +32,13 @@ TEST_CASES = [
     {
         "name": "complex_multipart_query",
         "prompt": "Compare the weather in London and Tokyo, then write a haiku about the differences",
-        "expected_tool": ToolType.GEMINI,
+        "expected_tool": ToolType.OPENAI,  # Changed from GEMINI
         "expected_characteristics": ["compares locations", "haiku structure", "creative"]
     },
     {
         "name": "factual_inquiry",
         "prompt": "What's the capital of France?",
-        "expected_tool": ToolType.GEMINI,
+        "expected_tool": ToolType.OPENAI,  # Changed from GEMINI
         "expected_characteristics": ["accurate", "concise"]
     }
 ]
